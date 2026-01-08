@@ -12,6 +12,24 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
 //Write the authenication mechanism here
+const authHeader = req.headers['authorization']
+if(!authHeader) {
+    return res.status(401).json({message: 'missing authorization details'})
+}
+const token = authHeader.split('')[1];
+if(!token) {
+    return res.status(401).json({message:"Missing token" })
+}
+
+try {
+    const payload = jwt.verify(token, SECRET)
+    req.user = payload;
+    next()
+    } catch(err) {
+        return res.status(403).json({'Invalid token - try again'})
+    }
+
+//return res.status(200).send('user is logged in successfully')
 });
  
 const PORT =5000;
