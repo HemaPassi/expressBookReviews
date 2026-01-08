@@ -1,0 +1,22 @@
+# Get books by title = Fairy tales
+curl http://localhost:5000/title/fairy%20tales
+[
+  {
+    "author": "Hans Christian Andersen",
+    "title": "Fairy tales",
+    "reviews": {}
+  }
+]
+
+# Get books by title = Fairy tales using async/await
+curl http://localhost:5000/async-title/Fairy%20tales
+{
+  "message": "get fetched using async/await",
+  "books": [
+    {
+      "author": "Hans Christian Andersen",
+      "title": "Fairy tales",
+      "reviews": {}
+    }
+  ]
+}
