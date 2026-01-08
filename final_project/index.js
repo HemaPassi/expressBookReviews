@@ -26,7 +26,7 @@ try {
     req.user = payload;
     next()
     } catch(err) {
-        return res.status(403).json({'Invalid token - try again'})
+        return res.status(403).json({message: 'Invalid token - try again'})
     }
 
 //return res.status(200).send('user is logged in successfully')

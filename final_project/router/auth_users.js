@@ -18,14 +18,13 @@ const user= users.find(userDetail => userDetail.username == username && userDeta
 
 //only registered users can login
 regd_users.post("/login", (req,res) => {
-  //Write your code here
   const { username, password } = req.body
 
   if(!username || !password) {
     return regd_users.status(400).join({message: 'Please enter User Name and password ' })
   }
   if(!authenticatedUser(username, password)) {
-    return res.status(401).json(message: 'Invalid deatils')
+    return res.status(401).json({message: 'Invalid deatils'})
   }
 
   const token = jwt.sign({username}, 'access', {expireIn: '2h'})
