@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
 const regd_users = express.Router();
+const JWT_SECRET = "Secret";
 
 let users = [];
               
@@ -18,19 +19,16 @@ const user= users.find(userDetail => userDetail.username == username && userDeta
 
 //only registered users can login
 regd_users.post("/login", (req,res) => {
-  const { username, password } = req.body
+   const { username, password } = req.body
+  
+    const user = users.find(u => u.username === username);
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Invalid details..." });
+    }
+  
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "3h" });
 
-  if(!username || !password) {
-    return regd_users.status(400).join({message: 'Please enter User Name and password ' })
-  }
-  if(!authenticatedUser(username, password)) {
-    return res.status(401).json({message: 'Invalid deatils'})
-  }
-
-  const token = jwt.sign({username}, 'access', {expireIn: '2h'})
-  req.session.authorization = { token, username}
-
-  return res.status(200).json({message: "User is loggedin successfully"});
+  return res.json({message: "User is loggedin successfully",token});
 });
 
 // Add a book review
@@ -50,7 +48,7 @@ if(!review) {
 }
 //add and udpate reviwe 
 books[isbn].reviews[username]= review;
-  return res.status(200).json({message: "Review added"});
+  return res.status(200).json({message: "Review added. ", reviews:books[isbn].reviews});
 });
 
 module.exports.authenticated = regd_users;

@@ -11,12 +11,12 @@ public_users.post("/register", (req,res) => {
     if(!username || !password) {
         return res.status(400).json({message: " Username and pasword required "})
     }
-    const userAlreadyExist = users.find(u => username == username)
+    const userAlreadyExist = users.find(u => u.username == username)
     if(userAlreadyExist) {
-        return res.status(409).json({message: " User already exists"})
+        return res.status(409).json({message: " User already exists",username})
     }
     users.push({username, password})
-  return res.status(201).json({message: "User is registered"});
+  return res.status(201).json({message: "User is registered ",username});
 });
 
 // Get the book list available in the shop
