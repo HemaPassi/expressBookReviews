@@ -1,0 +1,15 @@
+# Get book by ISBN = 1
+curl http://localhost:5000/isbn/1
+{"message":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"shreyaP":"Amazing story!"}}}
+
+# Get book by ISBN = 2
+curl http://localhost:5000/isbn/2
+{"message":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}
+
+# Get book by ISBN = 2 using Promises
+curl http://localhost:5000/promise-isbn/2
+{"message":"Promise: book fetched.","book":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}
+
+# Get book by ISBN = 2 using async/await
+curl http://localhost:5000/async-isbn/2
+{"message":"get fetched using async/await","book":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}

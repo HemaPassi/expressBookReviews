@@ -1,0 +1,78 @@
+# Get books by author = Jane Austen
+curl http://localhost:5000/author/Jane%20Austen
+[
+  {
+    "author": "Jane Austen",
+    "title": "Pride and Prejudice",
+    "reviews": {}
+  }
+]
+
+# Get books by author = Jane Austen using async/await
+curl "http://localhost:5000/async-author/Jane%20Austen"
+{
+  "message": "get fetched using async/await",
+  "books": [
+    {
+      "author": "Jane Austen",
+      "title": "Pride and Prejudice",
+      "reviews": {}
+    }
+  ]
+}
+
+# Get books by author = Charles Dickens
+curl http://localhost:5000/author/Charles%20Dickens
+[
+  {
+    "author": "Charles Dickens",
+    "title": "Great Expectations",
+    "reviews": {}
+  }
+]
+
+# Get books by author = Charles Dickens using async/await
+curl "http://localhost:5000/async-author/Charles%20Dickens"
+{
+  "message": "get fetched using async/await",
+  "books": [
+    {
+      "author": "Charles Dickens",
+      "title": "Great Expectations",
+      "reviews": {}
+    }
+  ]
+}
+
+# Get books by author = Homer
+curl http://localhost:5000/author/Homer
+[
+  {
+    "author": "Homer",
+    "title": "The Odyssey",
+    "reviews": {}
+  },
+  {
+    "author": "Homer",
+    "title": "The Iliad",
+    "reviews": {}
+  }
+]
+
+# Get books by author = Homer using async/await
+curl "http://localhost:5000/async-author/Homer"
+{
+  "message": "get fetched using async/await",
+  "books": [
+    {
+      "author": "Homer",
+      "title": "The Odyssey",
+      "reviews": {}
+    },
+    {
+      "author": "Homer",
+      "title": "The Iliad",
+      "reviews": {}
+    }
+  ]
+}
