@@ -23,7 +23,7 @@ public_users.post("/register", (req,res) => {
 public_users.get('/',function (req, res) {
   //Write your code here
     const books_data=res.json(books, null, 2)  
-  return res.status(300).json({message: books_data});
+  return res.status(200).json({message: books_data});
 });
 
 // Get book details based on ISBN
