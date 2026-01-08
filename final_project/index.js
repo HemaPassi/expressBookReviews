@@ -3,10 +3,9 @@ const jwt = require('jsonwebtoken');
 const session = require('express-session')
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
-const JWT_SECRET = "Secret";
+const { JWT_SECRET } = require('./keys.js')
 
 const app = express();
-
 app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
@@ -21,7 +20,7 @@ const parts=authHeader.split(' ')
 if(parts.length !== 2 || parts[0] !== 'Bearer') {
     return res.status(401).json({message:'authorization header is wrong' })
 }
-const token = authHeader.split('')[1];
+const token = parts[1];
 if(!token) {
     return res.status(401).json({message:"Missing token" })
 }
