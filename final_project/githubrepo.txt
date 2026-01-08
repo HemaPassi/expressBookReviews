@@ -1,0 +1,103 @@
+
+Github repo:
+git@github.com:HemaPassi/expressBookReviews.git
+
+
+Register user	curl -X POST http://localhost:5000/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"shreyaP", "password": "pass123"}'
+
+	Output:
+{"message":"User is registered ","username":"shreyaP"}
+
+
+Login	curl -X POST http://localhost:5000/customer/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"shreyaP","password":"pass123"}'
+
+	Output:
+{"message":"User is loggedin successfully","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNocmV5YVAiLCJpYXQiOjE3Njc5MDMyMDIsImV4cCI6MTc2NzkxNDAwMn0.ceRS02eLWFMUUO_hl97IQCdUdNCtDWSIlZmdIlazd9E"}
+
+
+Review added	curl -X PUT "http://localhost:5000/customer/auth/review/1" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNocmV5YVAiLCJpYXQiOjE3Njc5MDMyMDIsImV4cCI6MTc2NzkxNDAwMn0.ceRS02eLWFMUUO_hl97IQCdUdNCtDWSIlZmdIlazd9E" \
+  -H "Content-Type: application/json" \
+  -d '{"review":"Amazing story!"}'
+
+	Output:
+{"message":"Review added. ","reviews":{"shreyaP":"Amazing story!"}}
+
+
+Delete reivew	curl -X DELETE "http://localhost:5000/customer/auth/review/1" \
+  -H "Authorization: Bearer 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNocmV5YVAiLCJpYXQiOjE3Njc5MDMyMDIsImV4cCI6MTc2NzkxNDAwMn0.ceRS02eLWFMUUO_hl97IQCdUdNCtDWSIlZmdIlazd9E"
+
+	
+
+GetAllBooks	 curl http://localhost:5000
+
+Output	{"books":{"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"shreyaP":"Amazing story!"}},"2":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}},"3":{"author":"Dante Alighieri","title":"The Divine Comedy","reviews":{}},"4":{"author":"Unknown","title":"The Epic Of Gilgamesh","reviews":{}},"5":{"author":"Unknown","title":"The Book Of Job","reviews":{}},"6":{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}},"7":{"author":"Unknown","title":"Njál's Saga","reviews":{}},"8":{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}},"9":{"author":"Honor","title":"Le Père Goriot","reviews":{}},"10":{"author":"Samuel Beckett","title":"Molloy, Malone Dies, The Unnamable, the trilogy","reviews":{}}}}
+
+
+getbooksbyISBN    	 curl http://localhost:5000/isbn/1
+
+Output	{"message":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{"shreyaP":"Amazing story!"}}}
+
+
+
+
+getbooksbyauthor   	curl http://localhost:5000/author/Jane%20Austen
+
+Output	[{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}]
+
+
+getbooksbytitle 	curl http://localhost:5000/title/fairy%tales
+
+output	[{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}]
+
+
+getbookreview 	curl  http://localhost:5000/review/1
+
+Output	{"error":" reviwe not found"}
+
+
+Books	Async	curl http://localhost:5000/async-books
+
+	output	{"message":"get fetched using async/await","books":{"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}},"2":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}},"3":{"author":"Dante Alighieri","title":"The Divine Comedy","reviews":{}},"4":{"author":"Unknown","title":"The Epic Of Gilgamesh","reviews":{}},"5":{"author":"Unknown","title":"The Book Of Job","reviews":{}},"6":{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}},"7":{"author":"Unknown","title":"Njál's Saga","reviews":{}},"8":{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}},"9":{"author":"Honor","title":"Le Père Goriot","reviews":{}},"10":{"author":"Samuel Beckett","title":"Molloy, Malone Dies, The Unnamable, the trilogy","reviews":{}}}}
+
+
+	Promise	curl http://localhost:5000/promise-books
+
+	output	{"message":"Promise: books fetched.","books":{"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}},"2":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}},"3":{"author":"Dante Alighieri","title":"The Divine Comedy","reviews":{}},"4":{"author":"Unknown","title":"The Epic Of Gilgamesh","reviews":{}},"5":{"author":"Unknown","title":"The Book Of Job","reviews":{}},"6":{"author":"Unknown","title":"One Thousand and One Nights","reviews":{}},"7":{"author":"Unknown","title":"Njál's Saga","reviews":{}},"8":{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}},"9":{"author":"Honor","title":"Le Père Goriot","reviews":{}},"10":{"author":"Samuel Beckett","title":"Molloy, Malone Dies, The Unnamable, the trilogy","reviews":{}}}}
+
+
+	Isbn	curl http://localhost:5000/isbn/2
+	output	{"message":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}
+
+
+	Promise-isbn	curl http://localhost:5000/promise-isbn/2
+	output	{"message":"Promise: book fetched.","book":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}
+
+
+	Asyn-isbn/1	curl http://localhost:5000/async-isbn/2
+	output	{"message":"get fetched using async/await","book":{"author":"Hans Christian Andersen","title":"Fairy tales","reviews":{}}}
+		
+
+Author		curl http://localhost:5000/author/Jane%20Austen
+
+	output	[{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}]
+
+
+Title		curl "http://localhost:5000/async-author/Jane%20Austen"
+	output	{"message":"get fetched using async/await","books":[{"author":"Jane Austen","title":"Pride and Prejudice","reviews":{}}]}
+
+
+
+async-author
+		curl “http://localhost:5000/async-author/Fairy%20tales”
+
+	Output	{"message":"get fetched using async/await","books":[{"author":"Honor","title":"Le Père Goriot","reviews":{}}]}
+
+
+
+
