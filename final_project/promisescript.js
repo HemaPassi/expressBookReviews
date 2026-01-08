@@ -26,27 +26,6 @@ myPromise.then((successMessage) => {
   //Console log after calling the promise
   console.log("After calling promise");
 
-
-public_users.post("/register", (req,res) => {
-  //Write your code here
-  const {username, password} = req.body;
-
-    if(!username || !password) {
-        return res.status(400).json({message: " Username and password required "})
-    }
-    const userAlreadyExist = users.find(u => u.username == username)
-    if(userAlreadyExist) {
-        return res.status(409).json({message: "User already exists",username})
-    }
-    users.push({username, password})
-  return res.status(201).json({message: "User is registered",username});
-});
-
-// Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  return res.status(200).json({message:'Books fetched successfully.', books});
-});
-
 public_users.get('/promise-books', (req,res) => {
     axios.get('http://localhost:5000/customer/')
     .then(response => {
@@ -99,31 +78,12 @@ public_users.get('/author/:author', (req,res) => {
        return res.status(200).json({books: booksArr})
 })
 
-public_users.get('/promise-author/:author', (req,res) => {
-    const author= req.params.author.toLowerCase();
- axios.get(`http://localhost:5000/customer/author/${author}`)
-    .then(response => {
-        return res.status(200).json({message: 'book fetched.', books:response.data.books })
-    }).catch(error => {
-        return res.status(500).json({message: 'Error found', error: error.message})
-    })
-})
-
-public_users.get('/promise-author/:author', async (req, res) => {
-    const author= req.params.author;
-    try {
-        const response = await axios.get(`http://localhost:5000/customer/author/${author}`)
-        return res.status(200).json({message: 'get fetched using async/await', books: response.data.books})
-    } catch(error) {
-        return res.status(500).json({message: 'Error fecthing in book'})
-    }
-})
 
 //---------------- task 13
 
 public_users.get('/promise-title/:title', (req,res) => {
     const isbn= req.params.title;
-    axios.get(`http://localhost:5000/customer/isbn/${isbn}`)
+    axios.get(`http://localhost:5000`)
     .then(response => {
         return res.status(200).json({message: 'Promise: book fetched by title.', books:response.data.books })
     }).catch(error => {
@@ -141,6 +101,26 @@ public_users.get('/async-title/:title', async (req, res) => {
     }
 })
 
-module.exports.general = public_users;
 
 
+// public_users.get('/promise-author/:author', (req,res) => {
+//     const author= req.params.author.toLowerCase();
+//  axios.get(`http://localhost:5000/customer/author/${author}`)
+//     .then(response => {
+//         return res.status(200).json({message: 'book fetched.', books:response.data.books })
+//     }).catch(error => {
+//         return res.status(500).json({message: 'Error found', error: error.message})
+//     })
+// })
+
+// public_users.get('/promise-author/:author', async (req, res) => {
+//     const author= req.params.author;
+//     try {
+//         const response = await axios.get(`http://localhost:5000/customer/author/${author}`)
+//         return res.status(200).json({message: 'get fetched using async/await', books: response.data.books})
+//     } catch(error) {
+//         return res.status(500).json({message: 'Error fecthing in book'})
+//     }
+// })
+
+module.exports = public_users;
